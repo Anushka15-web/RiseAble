@@ -11,33 +11,33 @@ const About: React.FC = () => {
 
   const team = [
     {
-      name: "Priya Sharma",
-      role: language === "en" ? "Founder & CEO" : "संस्थापक और सीईओ",
-      image: "/lovable-uploads/19f436d8-dfdc-4e9e-a16c-54ee084b8b90.png",
+      name: "Aditya Arora",
+      role: language === "en" ? "NGO Founder" : "संस्थापक और सीईओ",
+      image: "https://assets.weforum.org/article/image/responsive_large_8SHLF6t5YaHJhGwOskAAzFQonGQsEFJZQvtbB_gJY1A.JPG",
       bio: language === "en"
         ? "Passionate about creating a more inclusive digital world for everyone."
         : "सभी के लिए एक अधिक समावेशी डिजिटल दुनिया बनाने के लिए जुनूनी।"
     },
     {
-      name: "Rahul Patel",
+      name: "Raghav Patel",
       role: language === "en" ? "CTO" : "सीटीओ",
-      image: "/lovable-uploads/19f436d8-dfdc-4e9e-a16c-54ee084b8b90.png",
+      image: "https://wecapable.com/wp-content/uploads/2018/06/javed-abidi-famous-disabled-people-india.jpg",
       bio: language === "en"
         ? "Leading our technical innovations to break accessibility barriers."
         : "एक्सेसिबिलिटी बाधाओं को तोड़ने के लिए हमारे तकनीकी नवाचारों का नेतृत्व करना।"
     },
     {
-      name: "Anjali Gupta",
+      name: "Rishita Gupta",
       role: language === "en" ? "Head of Accessibility" : "एक्सेसिबिलिटी प्रमुख",
-      image: "/lovable-uploads/19f436d8-dfdc-4e9e-a16c-54ee084b8b90.png",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgTrBEdvDp6Co7z8DfK1yrGXlrzgUK90rdBQ&s",
       bio: language === "en"
         ? "Expert in accessibility standards and inclusive design principles."
         : "एक्सेसिबिलिटी मानकों और समावेशी डिज़ाइन सिद्धांतों में विशेषज्ञ।"
     },
     {
-      name: "Arjun Singh",
+      name: "Seema Nagpal",
       role: language === "en" ? "Community Manager" : "समुदाय प्रबंधक",
-      image: "/lovable-uploads/19f436d8-dfdc-4e9e-a16c-54ee084b8b90.png",
+      image: "https://hands.org.pk/wp-content/uploads/2023/12/provide-assistance-to-person-with-disabilities-1.jpg",
       bio: language === "en"
         ? "Building bridges between communities and fostering inclusion."
         : "समुदायों के बीच पुल बनाना और समावेश को बढ़ावा देना।"
@@ -119,18 +119,18 @@ const About: React.FC = () => {
             <div className="prose prose-lg max-w-none">
               <p>
                 {language === "en"
-                  ? "RiseAble was founded in 2022 by Priya Sharma, who experienced firsthand the challenges that people with disabilities face in the digital world. After watching her sister, who is visually impaired, struggle to use essential online services, Priya decided to create a solution."
-                  : "RiseAble की स्थापना 2022 में प्रिया शर्मा द्वारा की गई थी, जिन्होंने डिजिटल दुनिया में विकलांग लोगों के सामने आने वाली चुनौतियों का सीधे अनुभव किया था। अपनी बहन को, जो दृष्टिबाधित है, आवश्यक ऑनलाइन सेवाओं का उपयोग करने के संघर्ष को देखने के बाद, प्रिया ने एक समाधान बनाने का फैसला किया।"}
+                  ? "RiseAble is a compassionate group project developed by Anushka, Vidhi, Bhumika, and Charu, dedicated to empowering physically disabled individuals. The project focuses on creating accessible solutions that promote independence, mobility, and dignity. By combining innovation with empathy, RiseAble aims to bridge the gap between disability and opportunity. "
+                  : "*राइज़एबल (RiseAble)* एक संवेदनशील समूह परियोजना है, जिसे अनुष्का, विधि, भूमिका और चारु द्वारा विकसित किया गया है। इस परियोजना का उद्देश्य शारीरिक रूप से विकलांग लोगों को सशक्त बनाना और उन्हें आत्मनिर्भर बनाना है।"}
               </p>
               <p>
                 {language === "en"
-                  ? "What began as a simple screen reader project quickly evolved into a comprehensive platform addressing multiple accessibility challenges. We assembled a team of technologists, accessibility experts, and advocates who shared our vision."
-                  : "जो एक साधारण स्क्रीन रीडर प्रोजेक्ट के रूप में शुरू हुआ था, वह जल्दी ही कई एक्सेसिबिलिटी चुनौतियों को संबोधित करने वाले एक व्यापक प्लेटफॉर्म में विकसित हो गया। हमने प्रौद्योगिकीविदों, एक्सेसिबिलिटी विशेषज्ञों और वकीलों की एक टीम बनाई जो हमारे दृष्टिकोण को साझा करते थे।"}
+                  ? "Whether through assistive technology, awareness campaigns, or community-driven support systems, the team envisions a society where everyone has equal access to resources and opportunities."
+                  : " राइज़एबल ऐसे समाधान प्रदान करता है जो उनकी दैनिक ज़रूरतों को आसान बना सकें और समाज में उनकी भागीदारी को बढ़ावा दें। "}
               </p>
               <p>
                 {language === "en"
-                  ? "Today, RiseAble serves thousands of users across India and beyond, continuously innovating to create more inclusive digital experiences. We partner with organizations, governments, and educational institutions to drive accessibility forward."
-                  : "आज, RiseAble भारत और उससे आगे हजारों उपयोगकर्ताओं की सेवा करता है, अधिक समावेशी डिजिटल अनुभव बनाने के लिए लगातार नवाचार करता है। हम एक्सेसिबिलिटी को आगे बढ़ाने के लिए संगठनों, सरकारों और शैक्षिक संस्थानों के साथ साझेदारी करते हैं।"}
+                  ? "RiseAble is not just a project—it’s a step towards a more inclusive and understanding world, where physical limitations do not define one’s potential."
+                  : " यह परियोजना सहायक तकनीक, जागरूकता अभियानों और सामुदायिक सहयोग के माध्यम से एक समावेशी समाज की दिशा में कार्य करती है, जहाँ शारीरिक अक्षमता किसी की क्षमता की सीमा नहीं बनती ।"}
               </p>
               <div className="flex justify-center mt-8">
                 <Button asChild size="lg">
