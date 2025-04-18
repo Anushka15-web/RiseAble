@@ -11,7 +11,27 @@ import FeaturesSection from "@/components/home/FeaturesSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import PartnersSection from "@/components/home/PartnersSection";
 import { motion } from "framer-motion";
-return (
+
+const Home: React.FC = () => {
+  const { language, reduceMotion } = useAccessibility();
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
+  return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden bg-gradient-to-b from-background to-secondary/30 dark:from-background dark:to-secondary/10">
@@ -171,7 +191,38 @@ return (
             viewport={{ once: true }}
             className="max-w-3xl mx-auto"
           >
-            );
+            <div className="inline-block p-2 rounded-full bg-white/20 mb-6">
+              <Sparkles className="h-6 w-6 text-white" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
+              {language === "en" ? "Ready to Break Barriers?" : "बाधाओं को तोड़ने के लिए तैयार हैं?"}
+            </h2>
+            <p className="text-lg mb-8 text-white/90 max-w-2xl mx-auto">
+              {language === "en" 
+                ? "Join our community and access the tools and resources you need to thrive."
+                : "हमारे समुदाय से जुड़ें और उन उपकरणों और संसाधनों तक पहुंचें जिनकी आपको सफल होने के लिए आवश्यकता है।"}
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button asChild size="lg" variant="secondary" className="rounded-full bg-white text-primary hover:bg-white/90">
+                <Link to="/courses" className="flex items-center gap-2">
+                  <GraduationCap className="h-5 w-5" />
+                  {language === "en" ? "Start Learning" : "सीखना शुरू करें"}
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="rounded-full border-white text-white hover:bg-white/10">
+                <Link to="/contact">
+                  {language === "en" ? "Contact Us" : "संपर्क करें"}
+                </Link>
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
 };
 
 export default Home;
+
+
+      
