@@ -71,7 +71,41 @@ const JobListings: React.FC = () => {
         : "हमें रचनात्मक लेखकों की आवश्यकता है जो पहुंच और समावेश के बारे में आकर्षक सामग्री का निर्माण कर सकते हैं।",
     },
   ];
- return (
+
+  const categories = ["Tech", "Design", "Accessibility", "Content"];
+  const locations = ["Remote", "New York", "San Francisco", "London"];
+  const jobTypes = ["Full-time", "Part-time", "Contract", "Internship"];
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategories(prev => 
+      prev.includes(category)
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    );
+  };
+
+  const handleLocationChange = (location: string) => {
+    setSelectedLocations(prev => 
+      prev.includes(location)
+        ? prev.filter(l => l !== location)
+        : [...prev, location]
+    );
+  };
+
+  const filteredJobs = jobs.filter(job => {
+    const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          job.company.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(job.category);
+    const matchesLocation = selectedLocations.length === 0 || selectedLocations.includes(job.location);
+    
+    return matchesSearch && matchesCategory && matchesLocation;
+  });
+
+  const openSignLanguageMode = (title: string, company: string) => {
+    setCurrentJobForSignLanguage({ title, company });
+  };
+
+  return (
     <div className="container mx-auto px-4 py-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">
