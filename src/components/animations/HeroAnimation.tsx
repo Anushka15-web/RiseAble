@@ -6,6 +6,14 @@ const HeroAnimation: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { reduceMotion } = useAccessibility();
 
+  const animatedElements = [
+    { emoji: "♿", label: "Accessibility", delay: 0.3, position: { top: "20%", left: "15%" } },
+    { emoji: "💬", label: "Communication", delay: 0.7, position: { top: "30%", right: "20%" } },
+    { emoji: "📚", label: "Education", delay: 0.5, position: { bottom: "25%", right: "30%" } },
+    { emoji: "🌏", label: "Global Access", delay: 0.9, position: { bottom: "35%", left: "25%" } },
+    { emoji: "💼", label: "Career", delay: 1.1, position: { top: "40%", left: "40%" } },
+  ];
+  
   return (
     <motion.div 
       ref={containerRef} 
@@ -26,6 +34,42 @@ const HeroAnimation: React.FC = () => {
       </div>
 
       <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-transparent rounded-xl" />
+
+      {!reduceMotion && (
+        <>
+          {animatedElements.map((element, index) => (
+            <motion.div
+              key={index}
+              className="floating-element absolute z-10"
+              style={element.position}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ 
+                opacity: 1, 
+                y: 0,
+                transition: { 
+                  delay: element.delay,
+                  duration: 0.5 
+                }
+              }}
+            >
+              <motion.div 
+                className="glass rounded-full p-4 shadow-lg border border-white/20"
+                animate={{ 
+                  y: [0, -10, 0],
+                }}
+                transition={{ 
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  duration: 2 + index * 0.5,
+                  ease: "easeInOut",
+                }}
+              >
+                <span role="img" aria-label={element.label} className="text-3xl">{element.emoji}</span>
+              </motion.div>
+            </motion.div>
+          ))}
+        </>
+      )}
     </motion.div>
   );
 };
