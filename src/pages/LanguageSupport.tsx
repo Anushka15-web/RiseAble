@@ -299,3 +299,346 @@ const LanguageSupport: React.FC = () => {
       });
     });
   };
+
+  const useRecentTranslation = (text: string) => {
+    setSourceText(text);
+  };
+
+  const usePhrase = (phrase: string) => {
+    setSourceText(phrase);
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-12">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary/80 to-blue-500 text-transparent bg-clip-text">
+          {language === "en" ? "Language Support" : "भाषा समर्थन"}
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          {language === "en"
+            ? "Break language barriers with real-time translation tools."
+            : "रीयल-टाइम अनुवाद उपकरणों के साथ भाषा की बाधाओं को तोड़ें।"}
+        </p>
+      </div>
+
+      <div className="max-w-4xl mx-auto">
+        <Card className="shadow-lg border-2 border-muted/40 overflow-hidden">
+          <div className="absolute top-0 right-0 h-32 w-32 -mt-8 -mr-8 bg-primary/10 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-0 left-0 h-32 w-32 -mb-8 -ml-8 bg-blue-500/10 rounded-full blur-2xl"></div>
+          
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Globe className="h-5 w-5 text-primary" />
+              {language === "en" ? "Translator" : "अनुवादक"}
+            </CardTitle>
+            <CardDescription>
+              {language === "en"
+                ? "Translate between Hindi and English with our powerful translation tool."
+                : "हमारे शक्तिशाली अनुवाद उपकरण के साथ हिंदी और अंग्रेजी के बीच अनुवाद करें।"}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="space-y-2">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center">
+                    <Globe className="mr-2 h-4 w-4 text-primary" />
+                    <span className="font-medium">
+                      {translateDirection === "enToHi" ? "English" : "हिंदी"}
+                    </span>
+                  </div>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={handleVoiceInput}
+                    className="transition-all hover:bg-primary/20"
+                  >
+                    <Mic className="h-4 w-4" />
+                    <span className="ml-2 text-xs">
+                      {language === "en" ? "Voice" : "आवाज़"}
+                    </span>
+                  </Button>
+                </div>
+                <Textarea
+                  id="source-textarea"
+                  value={sourceText}
+                  onChange={(e) => setSourceText(e.target.value)}
+                  placeholder={translateDirection === "enToHi" 
+                    ? "Enter text in English..." 
+                    : "हिंदी में टेक्स्ट दर्ज करें..."}
+                  className="h-40 resize-none transition-all border-2 focus:border-primary/50"
+                />
+                
+                {/* Quick phrases section */}
+                <div className="mt-4">
+                  <p className="text-sm text-muted-foreground mb-2">
+                    {language === "en" ? "Quick Phrases:" : "त्वरित वाक्यांश:"}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {(translateDirection === "enToHi" ? commonPhrases.en : commonPhrases.hi)
+                      .slice(0, 3)
+                      .map((phrase, index) => (
+                        <Button 
+                          key={index} 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={() => usePhrase(phrase)}
+                          className="text-xs"
+                        >
+                          {phrase.length > 20 ? phrase.substring(0, 20) + "..." : phrase}
+                        </Button>
+                      ))
+                    }
+                    {recentTranslations.length > 0 && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => document.getElementById("recent-translations")?.scrollIntoView({ behavior: "smooth" })}
+                        className="text-primary text-xs"
+                      >
+                        {language === "en" ? "View history" : "इतिहास देखें"} →
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center">
+                    <Globe className="mr-2 h-4 w-4 text-primary" />
+                    <span className="font-medium">
+                      {translateDirection === "enToHi" ? "हिंदी" : "English"}
+                    </span>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Button 
+                      variant="ghost"
+                      size="icon"
+                      onClick={copyTranslation}
+                      disabled={!translatedText}
+                      className="h-8 w-8"
+                    >
+                      {copySuccess ? 
+                        <CheckCircle className="h-4 w-4 text-green-500" /> : 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                      }
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={() => speakText(translatedText)}
+                      disabled={!translatedText}
+                      className="h-8 w-8"
+                    >
+                      <Volume2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+                <div className="relative">
+                  <Textarea
+                    value={translatedText}
+                    readOnly
+                    placeholder={translateDirection === "enToHi"
+                      ? "अनुवादित टेक्स्ट यहां दिखाई देगा..."
+                      : "Translated text will appear here..."}
+                    className="h-40 resize-none bg-muted/20 border-2"
+                  />
+                  {isTranslating && (
+                    <div className="absolute inset-0 bg-background/70 backdrop-blur-sm flex flex-col items-center justify-center rounded-md">
+                      <div className="flex flex-col items-center">
+                        <div className="relative h-10 w-10 mb-2">
+                          <div className="absolute animate-ping h-full w-full rounded-full bg-primary/30"></div>
+                          <div className="relative flex items-center justify-center h-full w-full rounded-full bg-primary/40">
+                            <Globe className="h-6 w-6 text-primary-foreground" />
+                          </div>
+                        </div>
+                        <p className="text-sm font-medium animate-pulse">
+                          {language === "en" ? "Translating..." : "अनुवाद कर रहा है..."}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="mt-4 rounded-lg bg-muted/20 p-3 border border-muted">
+                  <p className="text-sm text-muted-foreground">
+                    {language === "en" 
+                      ? "Tip: Click the swap button below to reverse the translation direction."
+                      : "टिप: अनुवाद दिशा को उलटने के लिए नीचे स्वैप बटन पर क्लिक करें।"}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative">
+              <div className="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <Button 
+                  onClick={swapLanguages}
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full h-12 w-12 bg-background shadow-md border-2 hover:border-primary hover:shadow-lg transition-all"
+                  disabled={isTranslating}
+                >
+                  <RotateCw className="h-5 w-5" />
+                </Button>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row justify-between gap-4 mt-8 pt-4 border-t">
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={handleTranslate}
+                    disabled={!sourceText.trim() || isTranslating}
+                    className="flex-1 relative overflow-hidden group"
+                  >
+                    {isTranslating ? (
+                      <>
+                        <span className="opacity-0">{language === "en" ? "Translating..." : "अनुवाद हो रहा है..."}</span>
+                        <span className="absolute inset-0 flex items-center justify-center">
+                          <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <ArrowRight className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        {language === "en" ? "Translate" : "अनुवाद करें"}
+                      </>
+                    )}
+                  </Button>
+                </div>
+                <Button 
+                  variant="outline"
+                  onClick={clearText}
+                  disabled={!sourceText && !translatedText}
+                  className="gap-2"
+                >
+                  <X className="h-4 w-4" />
+                  {language === "en" ? "Clear All" : "सभी साफ़ करें"}
+                </Button>
+              </div>
+            </div>
+            
+            {/* Recent translations section */}
+            {recentTranslations.length > 0 && (
+              <div id="recent-translations" className="mt-8 pt-6 border-t">
+                <h3 className="text-lg font-medium mb-3">
+                  {language === "en" ? "Recent Translations:" : "हाल के अनुवाद:"}
+                </h3>
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-2 pb-2">
+                  {recentTranslations.map((text, index) => (
+                    <div key={index} className="flex justify-between items-center p-2 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors">
+                      <div className="truncate flex-1 pr-2">{text}</div>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => useRecentTranslation(text)}
+                        className="shrink-0"
+                      >
+                        {language === "en" ? "Use" : "उपयोग करें"}
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Card className="shadow-md border-2 border-muted/40 hover:border-primary/20 transition-all hover:shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                {language === "en" ? "Language Learning Resources" : "भाषा सीखने के संसाधन"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors group">
+                  <h3 className="font-medium mb-1 group-hover:text-primary transition-colors">
+                    {language === "en" ? "Hindi for Beginners" : "शुरुआती लोगों के लिए अंग्रेजी"}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {language === "en" 
+                      ? "Learn basic Hindi vocabulary and phrases."
+                      : "बुनियादी अंग्रेजी शब्दावली और वाक्यांश सीखें।"}
+                  </p>
+                </div>
+                <div className="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors group">
+                  <h3 className="font-medium mb-1 group-hover:text-primary transition-colors">
+                    {language === "en" ? "English Grammar Guide" : "हिंदी व्याकरण गाइड"}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {language === "en"
+                      ? "Master English grammar rules and usage."
+                      : "हिंदी व्याकरण नियमों और उपयोग पर महारत हासिल करें।"}
+                  </p>
+                </div>
+                <div className="p-4 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors group">
+                  <h3 className="font-medium mb-1 group-hover:text-primary transition-colors">
+                    {language === "en" ? "Conversational Practice" : "वार्तालाप अभ्यास"}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {language === "en"
+                      ? "Practice everyday conversations in both languages."
+                      : "दोनों भाषाओं में रोजमर्रा की बातचीत का अभ्यास करें।"}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-md border-2 border-muted/40 hover:border-primary/20 transition-all hover:shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                {language === "en" ? "Multi-Language Support" : "बहु-भाषा समर्थन"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <p className="text-muted-foreground mb-4">
+                  {language === "en"
+                    ? "Our platform supports multiple languages to ensure accessibility for all users."
+                    : "हमारा प्लेटफॉर्म सभी उपयोगकर्ताओं के लिए पहुंच सुनिश्चित करने के लिए कई भाषाओं का समर्थन करता है।"}
+                </p>
+                
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <Button variant="outline" size="sm" className="justify-start hover:bg-primary/10 hover:text-primary transition-colors">
+                    <span className="mr-2">🇮🇳</span> हिंदी
+                  </Button>
+                  <Button variant="outline" size="sm" className="justify-start hover:bg-primary/10 hover:text-primary transition-colors">
+                    <span className="mr-2">🇬🇧</span> English
+                  </Button>
+                  <Button variant="outline" size="sm" className="justify-start hover:bg-primary/10 hover:text-primary transition-colors">
+                    <span className="mr-2">🇮🇳</span> मराठी
+                  </Button>
+                  <Button variant="outline" size="sm" className="justify-start hover:bg-primary/10 hover:text-primary transition-colors">
+                    <span className="mr-2">🇮🇳</span> తెలుగు
+                  </Button>
+                  <Button variant="outline" size="sm" className="justify-start hover:bg-primary/10 hover:text-primary transition-colors">
+                    <span className="mr-2">🇮🇳</span> தமிழ்
+                  </Button>
+                  <Button variant="outline" size="sm" className="justify-start hover:bg-primary/10 hover:text-primary transition-colors">
+                    <span className="mr-2">🇮🇳</span> বাংলা
+                  </Button>
+                </div>
+                
+                <div className="mt-4">
+                  <Button className="w-full relative overflow-hidden group">
+                    <span className="group-hover:translate-x-1 transition-transform inline-block">
+                      {language === "en" ? "Request a Language" : "भाषा का अनुरोध करें"}
+                    </span>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LanguageSupport;
