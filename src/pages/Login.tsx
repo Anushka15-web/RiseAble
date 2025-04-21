@@ -92,7 +92,78 @@ const Login: React.FC = () => {
                       />
                     </div>
                   </div>
-                  <TabsContent value="signup">
+                  
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <Label htmlFor="password">
+                        {language === "en" ? "Password" : "पासवर्ड"}
+                      </Label>
+                      <Link to="/forgot-password" className="text-xs text-primary hover:underline">
+                        {language === "en" ? "Forgot password?" : "पासवर्ड भूल गए?"}
+                      </Link>
+                    </div>
+                    <div className="relative">
+                      <Key className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input 
+                        id="password" 
+                        type={showPassword ? "text" : "password"} 
+                        placeholder={language === "en" ? "Enter your password" : "अपना पासवर्ड दर्ज करें"} 
+                        className="pl-10 pr-10"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                      <Button 
+                        type="button"
+                        variant="ghost" 
+                        size="icon" 
+                        className="absolute right-1 top-1 h-8 w-8"
+                        onClick={() => setShowPassword(!showPassword)}
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                      >
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="remember" 
+                      checked={rememberMe}
+                      onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                    />
+                    <label
+                      htmlFor="remember"
+                      className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {language === "en" ? "Remember me" : "मुझे याद रखें"}
+                    </label>
+                  </div>
+                  
+                  <Button type="submit" className="w-full">
+                    {language === "en" ? "Sign In" : "साइन इन"}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </form>
+              </CardContent>
+              <CardFooter>
+                <div className="text-center w-full text-sm text-muted-foreground">
+                  {language === "en" 
+                    ? "Don't have an account?" 
+                    : "खाता नहीं है?"} 
+                  <button 
+                    type="button" 
+                    className="text-primary font-medium hover:underline focus:outline-none ml-1"
+                    onClick={() => document.querySelector('[data-value="signup"]')?.dispatchEvent(new MouseEvent('click'))}
+                  >
+                    {language === "en" ? "Sign up" : "साइन अप करें"}
+                  </button>
+                </div>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="signup">
             <Card>
               <CardHeader>
                 <CardTitle>{language === "en" ? "Create Account" : "खाता बनाएं"}</CardTitle>
