@@ -1,5 +1,5 @@
 # RiseAble
-Rise above all , embrace your ability, and let nothing hold you back.
+Rise above  , embrace your ability, and let nothing hold you back.
 --- 
 ## Overview 
 
