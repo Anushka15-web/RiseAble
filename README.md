@@ -1,5 +1,5 @@
 # RiseAble
-Rise above limits, own your journey, and let your potential shine.
+Rise above, embrace your ability, and let nothing hold you back.
 --- 
 ## Overview 
 
