@@ -1,5 +1,5 @@
 # RiseAble
-Rise beyond limits, embrace your strength, and shine unapologetically.
+Break barriers, unlock your potential, and rise fearlessly.
 --- 
 ## Overview 
 
